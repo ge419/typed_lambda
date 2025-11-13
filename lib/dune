@@ -1,0 +1,3 @@
+(library
+ (name typed_lambda)
+ (modules ast))
