@@ -1,0 +1,3 @@
+let apply = fun (f : int -> int) -> fun (x : int) -> f x in
+let inc = fun (n : int) -> n + 1 in
+((apply inc) 5)

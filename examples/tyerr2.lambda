@@ -1,0 +1,1 @@
+let x = fun (y : int) -> y in x + 3

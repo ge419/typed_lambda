@@ -1,0 +1,4 @@
+let compose = fun (f : int -> int) -> fun (g : int -> int) -> fun (x : int) -> f (g x) in
+let inc = fun (n : int) -> n + 1 in
+let double = fun (n : int) -> (n + n) in
+(((compose inc) double) 3)

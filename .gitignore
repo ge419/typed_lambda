@@ -1,0 +1,53 @@
+# Build artifacts
+/_build/
+/_build/*
+**/_build/
+
+# Dune lock files and temporary artifacts
+/.merlin
+/.merlin-exists
+/.ocamlformat
+/.ocamlformat-eol
+/.ocamlformat-ignore
+/.ocamlformat-enable
+/dune
+/dune-project.local
+/dune-workspace.local
+*.install
+*.cmo
+*.cmi
+*.cma
+*.cmx
+*.cmxa
+*.cmxs
+*.o
+*.a
+*.annot
+
+# Local OPAM environment
+/_opam/
+/.opam-switch/
+.opam-switch/
+/.opam/
+/.opam-switch/*
+.opam.locked
+
+# Editor/IDE
+*.swp
+*~
+*.tmp
+*.bak
+*.old
+.DS_Store
+*.vscode
+.idea/
+*.merlin
+
+# Test / temporary scripts
+*.log
+*.out
+*.err
+
+# Backup folders you created
+lib/backup/
+tools/backup/
