@@ -31,7 +31,7 @@ type ty =
 (* type ty = 
   | TInt of label (* Type of integers with security label *)
   | TBool of label (* Type of booleans with security label *)
-  | TFun of ty * ty Function type from one type to another *)
+  | TFun of ty * ty (* Function type from one type to another *) *)
 
 (* Function to convert types to string for readability; recursive *)
 let rec string_of_ty = function

@@ -1,4 +1,4 @@
-(* Abstract Syntax Tree (AST) definition for a simply, typed functional language *)
+(* Abstract Syntax Tree (AST) definition for a simply typed functional language *)
 
 (* Expression definitions *)
 type expr =
