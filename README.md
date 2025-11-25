@@ -208,9 +208,9 @@ $$
 $$
 \text{S-If}
 \qquad
-\frac{ \Gamma,\,\text{flow} \vdash e_c : \mathsf{bool@secret} \qquad
-       \Gamma,\,\text{join(flow,secret)} \vdash e_1 : \tau \qquad
-       \Gamma,\,\text{join(flow,secret)} \vdash e_2 : \tau }
+\frac{ \Gamma,\,\text{flow} \vdash e_c : \mathsf{bool@}\ell_c \qquad
+       \Gamma,\,\text{join}(\text{flow}, \ell_c) \vdash e_1 : \tau \qquad
+       \Gamma,\,\text{join}(\text{flow}, \ell_c) \vdash e_2 : \tau }
      { \Gamma,\,\text{flow} \vdash \textbf{if } e_c \textbf{ then } e_1 \textbf{ else } e_2 : \tau }
 $$
 $$
