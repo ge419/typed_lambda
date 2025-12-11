@@ -1,0 +1,1 @@
+let add = fun (a : int@public) -> fun (b : int@public) -> a + b in ((add 2) 5)

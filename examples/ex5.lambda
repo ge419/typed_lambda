@@ -1,3 +1,0 @@
-let twice = fun (f : int -> int) -> fun (x : int) -> f (f x) in
-let inc = fun (n : int) -> n + 1 in
-((twice inc) 5)

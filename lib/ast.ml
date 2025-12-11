@@ -11,6 +11,7 @@ type expr =
   | Lam of string * Types.ty * expr (* Lambda abstraction e.g. fun (x : int) -> x + 1  --> Lam (x, TInt, Add (Var x, Int 1)) *)
   | App of expr * expr (* Function application e.g. f 3 --> App (Var f, Int 3) *)
   | If of expr * expr * expr (* If expression e.g. if cond then e1 else e2 --> If (Var cond, e1, e2) *)
+  | LetAnn of string * Types.ty * expr * expr (* Let binding with type annotation.*)
 
 (* Function to convert expressions to string for readability; recursive *)
 let rec string_of_expr = function
@@ -28,3 +29,6 @@ let rec string_of_expr = function
       "(" ^ string_of_expr f ^ " " ^ string_of_expr a ^ ")"
   | If (c,t,e) ->
       "if " ^ string_of_expr c ^ " then " ^ string_of_expr t ^ " else " ^ string_of_expr e
+  | LetAnn (x, ty, e1, e2) ->
+    "let " ^ x ^ " : " ^ Types.string_of_ty ty ^ " = " ^
+    string_of_expr e1 ^ " in " ^ string_of_expr e2

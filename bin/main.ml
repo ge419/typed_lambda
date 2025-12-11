@@ -6,7 +6,6 @@ module Interpreter = Typed_lambda.Interpreter
 let process_string src =
   try
     let ast = Parser.parse_string src in
-    (* typecheck *)
     let ty = Typecheck.typeof [] ast in
     let ty_str = Types.string_of_ty ty in
     let v = Interpreter.eval [] ast in
@@ -27,7 +26,7 @@ let run_file fname =
 
 
 let repl () =
-  Printf.printf "typed_lambda REPL. End multiline input with ';;' on its own line.\n";
+  Printf.printf "Welcome! End multiline input with ';;' on its own line. To exit, use :q or :quit.\n";
   let rec loop env =
     print_string "> "; flush stdout;
     match read_line () with
@@ -35,7 +34,7 @@ let repl () =
     | line ->
         let trimmed = String.trim line in
         if trimmed = "" then loop env
-        else if trimmed = ":q" || trimmed = ":quit" then (Printf.printf "bye\n"; ())
+        else if trimmed = ":q" || trimmed = ":quit" then (Printf.printf "Good Bye!\n"; ())
         else if String.length trimmed >= 5 && String.sub trimmed 0 5 = ":type" then
           let rest = String.trim (String.sub trimmed 5 (String.length trimmed - 5)) in
           if rest = "" then (Printf.printf "Usage: :type <expr>\n"; loop env)

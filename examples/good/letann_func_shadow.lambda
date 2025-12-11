@@ -1,0 +1,1 @@
+let x : int@public = 1 in let x : int@secret = (fun (y : int@secret) -> y) 2 in x

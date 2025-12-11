@@ -1,0 +1,1 @@
+let x : int@public = 3 in x + 1

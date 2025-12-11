@@ -1,0 +1,4 @@
+let twice = fun (f : int@public -> int@public) ->
+            fun (x : int@public) -> f (f x) in
+let inc = fun (n : int@public) -> n + 1 in
+((twice inc) 5)

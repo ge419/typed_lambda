@@ -1,0 +1,4 @@
+let make_secret_bool = fun (b : bool@secret) -> b in
+let sb = make_secret_bool true in
+let f = fun (x : int@public) -> x in
+f (if sb then 1 else 0)

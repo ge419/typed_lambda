@@ -1,0 +1,7 @@
+let compose = fun (f : int@public -> int@public) ->
+              fun (g : int@public -> int@public) ->
+              fun (x : int@public) -> f (g x)
+in
+let inc = fun (n : int@public) -> n + 1 in
+let double = fun (n : int@public) -> n + n in
+(((compose inc) double) 3)

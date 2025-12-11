@@ -1,0 +1,2 @@
+let x : int@public = fun (y : int@public) -> y in
+x
