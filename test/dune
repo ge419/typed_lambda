@@ -1,3 +1,4 @@
 (test
  (name test_typed_lambda)
+ (modules test_typed_lambda)
  (libraries typed_lambda ounit2))
