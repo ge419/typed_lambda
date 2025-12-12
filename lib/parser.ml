@@ -15,6 +15,7 @@ type token =
   | LPAREN | RPAREN (* ( | )*)
   | PLUS | MINUS (* + | - *)
   | TRUE | FALSE
+  | AT (* @ *)
   | EOF
 
 (* Checks if a character starts with an identifier *)
@@ -23,13 +24,12 @@ let is_ident_start = function
   | '_' -> true
   | _ -> false
 
-(* *)
 let is_ident_char c =
   is_ident_start c || (c >= '0' && c <= '9')
 
 let tokenize (s : string) : token list =
   let len = String.length s in
-  (* Inner hepler that skips white space *)
+  (* Inner helper that skips white space *)
   let rec skip_ws i =
     if i >= len then i
     else match s.[i] with
@@ -62,6 +62,7 @@ let tokenize (s : string) : token list =
           else aux (i+1) (MINUS :: acc)
       | ':' -> aux (i+1) (COLON :: acc)
       | '=' -> aux (i+1) (EQ :: acc)
+      | '@' -> aux (i+1) (AT :: acc)
       | c when (c >= '0' && c <= '9') ->
           let (j, n) = number i 0 in
           aux j (INT n :: acc)
@@ -108,11 +109,16 @@ and parse_type_tail tleft tokens =
       (TFun (tleft, tright), rest')
   | _ -> (tleft, tokens)
 
-(* Parse atomic type forms *)
 and parse_atomic_type tokens =
   match tokens with
-  | IDENT "int" :: rest -> (TInt, rest)
-  | IDENT "bool" :: rest -> (TBool, rest)
+  | IDENT "int" :: AT :: IDENT label :: rest ->
+      let l = (match label with "public" -> Public | "secret" -> Secret | _ -> raise (Parse_error ("Unknown label: " ^ label))) in
+      (TInt l, rest)
+  | IDENT "bool" :: AT :: IDENT label :: rest ->
+      let l = (match label with "public" -> Public | "secret" -> Secret | _ -> raise (Parse_error ("Unknown label: " ^ label))) in
+      (TBool l, rest)
+  | IDENT "int" :: rest -> (TInt Public, rest) (* default: public *)
+  | IDENT "bool" :: rest -> (TBool Public, rest) (* default: public *)
   | LPAREN :: rest ->
       let (t, rest') = parse_type rest in
       (match rest' with
@@ -120,15 +126,25 @@ and parse_atomic_type tokens =
        | _ -> raise (Parse_error "Expected ')' in type"))
   | _ -> raise (Parse_error "Unexpected token in type")
 
-(* Expressions *)
 let rec parse_expr tokens = parse_nonseq tokens
 
 and parse_nonseq tokens =
   parse_let tokens
 
-(* Parse let *)
+(* Parse let tokens (let, letann) *)
 and parse_let tokens =
   match tokens with
+  | LET :: IDENT x :: COLON :: _ ->
+      let (ty_x, rest_after_ty) = parse_type (List.tl (List.tl (List.tl tokens))) in
+      (match rest_after_ty with
+       | EQ :: rest_after_eq ->
+           let (e1, rest1) = parse_expr rest_after_eq in
+           (match rest1 with
+            | IN :: rest2 ->
+                let (e2, rest3) = parse_expr rest2 in
+                (LetAnn (x, ty_x, e1, e2), rest3)
+            | _ -> raise (Parse_error "Expected 'in' after annotated let"))
+       | _ -> raise (Parse_error "Expected '=' after annotated let type"))
   | LET :: IDENT x :: EQ :: rest ->
       let (e1, rest1) = parse_expr rest in
       (match rest1 with
@@ -139,12 +155,8 @@ and parse_let tokens =
   | _ -> parse_lambda tokens
 
 and parse_lambda tokens =
-  (* Form:
-     - FUN LPAREN IDENT x COLON <type> RPAREN ARROW <body>
-  *)
   match tokens with
   | FUN :: LPAREN :: IDENT x :: COLON :: _ ->
-      (* form with type annotation *)
       let rec drop_n n lst =
         match n, lst with
         | 0, _ -> lst
