@@ -43,7 +43,7 @@ To run each test file separately,
 dune exec bin/main.exe examples/(good or bad)/<testname>.lambda
 ```
 
-Tests in the `good` folder should pass, and tests in the `bad` folder will throw errors.
+Tests in the `good` folder should pass (OK), and tests in the `bad` folder will throw errors (TYPE ERROR, PARSE ERROR, etc.).
 
 ### 4. Run the REPL
 
@@ -116,65 +116,6 @@ let c = a + b in
 Here, `c` is now treated as secret
 
 ### Typing Rules
-
-<!-- $$
-\text{T-Int}
-\qquad
-\frac{ }{ \Gamma \vdash n : \mathsf{int} }
-$$
-
-$$
-\text{T-Bool}
-\qquad
-\frac{ }{ \Gamma \vdash b : \mathsf{bool} }
-$$
-
-$$
-\text{T-Var}
-\qquad
-\frac{ x : T \in \Gamma }{ \Gamma \vdash x : T }
-$$
-
-$$
-\text{T-Add}
-\qquad
-\frac{ \Gamma \vdash e_1 : \mathsf{int} \qquad \Gamma \vdash e_2 : \mathsf{int} }
-     { \Gamma \vdash e_1 + e_2 : \mathsf{int} }
-$$
-
-$$
-\text{T-Sub}
-\qquad
-\frac{ \Gamma \vdash e_1 : \mathsf{int} \qquad \Gamma \vdash e_2 : \mathsf{int} }
-     { \Gamma \vdash e_1 - e_2 : \mathsf{int} }
-$$
-
-$$
-\text{T-If}
-\qquad
-\frac{ \Gamma \vdash e_c : \mathsf{bool} \qquad \Gamma \vdash e_1 : T \qquad \Gamma \vdash e_2 : T }
-     { \Gamma \vdash \textbf{if } e_c \textbf{ then } e_1 \textbf{ else } e_2 : T }
-$$
-
-$$
-\text{T-Let}
-\qquad
-\frac{ \Gamma \vdash e_1 : T_1 \qquad \Gamma, x:T_1 \vdash e_2 : T_2 }
-     { \Gamma \vdash \textbf{let } x = e_1 \textbf{ in } e_2 : T_2 }
-$$
-
-$$
-\text{T-Lam}
-\qquad
-\frac{ \Gamma, x:T_1 \vdash e : T_2 }{ \Gamma \vdash \lambda(x:T_1).\,e : T_1 \to T_2 }
-$$
-
-$$
-\text{T-App}
-\qquad
-\frac{ \Gamma \vdash f : T_1 \to T_2 \qquad \Gamma \vdash a : T_1 }
-     { \Gamma \vdash f\,a : T_2 }
-$$ -->
 
 $$
 \text{S-Int}

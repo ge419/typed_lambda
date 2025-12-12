@@ -82,7 +82,6 @@ let rec typeof (env: tyenv) (e: expr) : ty =
           raise (Type_error ("Type error: trying to call a non-function: " ^ string_of_ty tf))
       end
   | If (c, t, e_else) ->
-      (* Typecheck condition and extract its label *)
       let tc = typeof env c in
       let cond_label =
         match tc with

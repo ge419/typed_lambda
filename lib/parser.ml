@@ -3,7 +3,6 @@ open Types
 
 exception Parse_error of string
 
-(* Tokens *)
 type token =
   | INT of int
   | IDENT of string (* identifiers *)
